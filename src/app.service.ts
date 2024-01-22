@@ -2,8 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
+  constructor(private readonly logger: Logger) {}
   getHello(): string {
-    Logger.log('[AppService] [getHello] : Hello World')
+    this.logger.log('[AppService] [getHello] : Hello World')
     return 'Hello World!';
   }
 }

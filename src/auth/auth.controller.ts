@@ -6,14 +6,15 @@ import { Response } from "express";
 
 @Controller("auth")
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+    private readonly logger: Logger) {}
 
   @Post("/login")
   async login(
     @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) res: Response
   ): Promise<loginType> {
-    Logger.log('[AuthController] [login] : Trying to login')
+    this.logger.log('[AuthController] [login] : Trying to login')
 
     const result = await this.authService.login(loginDto);
 
@@ -28,7 +29,7 @@ export class AuthController {
 
   @Post("/confirm")
   async confirmEmail(@Body() confirmDto: { token: string }) {
-    Logger.log('[AuthController] [confirmEmail] : Trying to set email')
+    this.logger.log('[AuthController] [confirmEmail] : Trying to set email')
 
     return this.authService.confirmEmail(confirmDto.token);
   }
